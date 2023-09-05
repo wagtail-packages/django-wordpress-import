@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "django-wordpress-import"
+version = "0.1.0"
+description = ""
+authors = ["Nick Moreton <nick.moreton@torchbox.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+django = "^4.2.5"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+jmespath = "^1.0.1"
+djangorestframework = "^3.14.0"
+
+
+[tool.poetry.group.dev.dependencies]
+click = "^8.1.7"
+black = "^23.7.0"
+flake8 = "^6.1.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+wp = "cli:wp"
+dj = "cli:dj"
+
+[tool.black]
+line-length = 120
