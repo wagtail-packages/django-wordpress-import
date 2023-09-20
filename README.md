@@ -1,67 +1,43 @@
 # Django Wordpress Import
 
-## Install dependencies
+## Setup
+
+### Clone the repo
 
 ```bash
-poetry install
+git clone git@github.com:wagtail-packages/django-wordpress-import.git
 ```
 
-Activate the virtual environment
+### Run with docker
 
 ```bash
-poetry shell
-```
-
-## Wordpress demo site
-
-### Running the Wordpress demo site
-
-The Wordpress demo site uses a docker container that can be started with the following command:
-
-```bash
-wp build
-wp up
-wp load
-```
-
-It will be available at <http://localhost:8888> and the admin at <http://localhost:8888/wp-admin> and populated with some default content.
-
-You can login with the following credentials:
-
-- Username: `admin`
-- Password: `password`
-
-The API root can be seen here: <http://localhost:8888/wp-json/wp/v2>
-
-- [Posts](http://localhost:8888/wp-json/wp/v2/posts)
-- [Pages](http://localhost:8888/wp-json/wp/v2/pages)
-- [Media](http://localhost:8888/wp-json/wp/v2/media)
-- [Categories](http://localhost:8888/wp-json/wp/v2/categories)
-- [Tags](http://localhost:8888/wp-json/wp/v2/tags)
-- [Users](http://localhost:8888/wp-json/wp/v2/users)
-- [Comments](http://localhost:8888/wp-json/wp/v2/comments)
-
-### To stop the demo site
-
-```bash
-wp down
-```
-
-### To remove the demo site
-
-```bash
-wp destroy
-```
-
-### List of wordpress commands
-
-```bash
-wp --help
+docker-compose up -d --build
 ```
 
 ## Django import site
 
 ### Running an import
+
+Start by entering the running container with:
+
+```bash
+docker-compose exec app bash
+```
+
+The first time you run it you will need to run the migrations and create a superuser:
+
+```bash
+./manage.py migrate
+./manage.py createsuperuser
+```
+
+Then activate the poetry shell with:
+
+```bash
+poetry install && poetry shell
+```
+
+Then run the following commands to import the data:
 
 ```bash
 dj authors
@@ -79,24 +55,14 @@ or to run all of them
 dj complete
 ```
 
-### To run the Django site
+## View/edit the imported data
 
-```bash
-dj runserver
-```
+You can view the imported data by going to the following url:
 
-### Management commands
+<http://localhost:8000/import-admin> and logging in with the superuser you created.
 
-With the virtual environment activated you can run the following commands:
+## View the API
 
-```bash
-./manage.py [command]
-```
+You can view the API endpoints by going to the following url:
 
-## Requiremnts
-
-- [x] Spin up a wordpress example site to import from
-- [x] Import form the Wordpress JSON API
-- [x] Create comparable records in Django models
-- [x] Make admin a usable app for at least viewing the importred content
-- [ ] Expose an API that can be used to import into Wagtail
+<http://localhost:8000/api/>

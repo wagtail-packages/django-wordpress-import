@@ -1,5 +1,4 @@
 import subprocess
-from pathlib import Path
 
 import click
 
@@ -19,8 +18,6 @@ commands = {
 @click.group()
 def dj():
     """CLI for django"""
-
-
 
 @dj.command()
 def complete():
@@ -84,12 +81,3 @@ def comments():
 def runserver():
     """Run the django server"""
     subprocess.run(["poetry", "run", "python", "manage.py", "runserver"])
-
-
-@dj.command()
-def destroy():
-    """Destroy the database"""
-    # delete the database
-    db = Path("./django_wordpress_import/db.sqlite3")
-    if db.exists():
-        db.unlink()

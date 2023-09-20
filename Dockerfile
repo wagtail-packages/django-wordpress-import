@@ -1,16 +1,24 @@
 FROM python:3.9-buster
 
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir \
-    poetry==1.6.1
+ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-COPY poetry.lock pyproject.toml /app/
+COPY . /app/
 
-RUN poetry config virtualenvs.create false && \
-    poetry install --no-dev --no-interaction --no-ansi
+RUN pip install poetry==1.6.1 && \
+    poetry export -f requirements.txt --output requirements.txt && \
+    pip install -r requirements.txt
 
-COPY . /app
+
+# RUN poetry config virtualenvs.create false && \
+#     poetry install \
+#     --no-interaction \
+#     --no-ansi
+
+# RUN poetry config virtualenvs.create false && \
+#     poetry install
+
+# COPY  . /app
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
