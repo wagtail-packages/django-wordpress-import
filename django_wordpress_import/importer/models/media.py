@@ -1,6 +1,6 @@
 from django.db import models
 
-from .abstract import WordpressModel
+from .abstract import WordpressModel, field_max_length
 
 
 class WPMedia(WordpressModel):
@@ -8,25 +8,51 @@ class WPMedia(WordpressModel):
 
     SOURCE_URL = "/wp-json/wp/v2/media"
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(
+        max_length=field_max_length,
+    )
     date = models.DateTimeField()
     date_gmt = models.DateTimeField()
-    guid = models.URLField()
+    guid = models.URLField(
+        max_length=field_max_length,
+    )
     modified = models.DateTimeField()
     modified_gmt = models.DateTimeField()
-    slug = models.SlugField()
-    status = models.CharField(max_length=255)
-    comment_status = models.CharField(max_length=255)
-    ping_status = models.CharField(max_length=255)
-    type = models.CharField(max_length=255)
-    link = models.URLField()
-    template = models.CharField(max_length=255)
+    slug = models.SlugField(
+        max_length=field_max_length,
+    )
+    status = models.CharField(
+        max_length=field_max_length,
+    )
+    comment_status = models.CharField(
+        max_length=field_max_length,
+    )
+    ping_status = models.CharField(
+        max_length=field_max_length,
+    )
+    type = models.CharField(
+        max_length=field_max_length,
+    )
+    link = models.URLField(
+        max_length=field_max_length,
+    )
+    template = models.CharField(
+        max_length=field_max_length,
+    )
     description = models.TextField()
     caption = models.TextField()
-    alt_text = models.CharField(max_length=255)
-    media_type = models.CharField(max_length=255)
-    mime_type = models.CharField(max_length=255)
-    source_url = models.URLField()
+    alt_text = models.CharField(
+        max_length=field_max_length,
+    )
+    media_type = models.CharField(
+        max_length=field_max_length,
+    )
+    mime_type = models.CharField(
+        max_length=field_max_length,
+    )
+    source_url = models.URLField(
+        max_length=field_max_length,
+    )
     author = models.ForeignKey(
         "importer.WPAuthor",
         on_delete=models.SET_NULL,

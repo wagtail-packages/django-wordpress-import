@@ -1,9 +1,6 @@
 from django.db import models
 
-from .abstract import WordpressModel
-from .author import WPAuthor
-from .category import WPCategory
-from .tag import WPTag
+from .abstract import WordpressModel, field_max_length
 
 
 class WPPost(WordpressModel):
@@ -11,23 +8,51 @@ class WPPost(WordpressModel):
 
     SOURCE_URL = "/wp-json/wp/v2/posts"
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(
+        max_length=field_max_length,
+    )
     date = models.DateTimeField()
     date_gmt = models.DateTimeField()
-    guid = models.URLField()
+    guid = models.URLField(
+        max_length=field_max_length,
+    )
     modified = models.DateTimeField()
     modified_gmt = models.DateTimeField()
-    slug = models.SlugField()
-    status = models.CharField(max_length=255)
-    type = models.CharField(max_length=255)
-    link = models.URLField()
-    content = models.TextField(blank=True, null=True)
-    excerpt = models.TextField(blank=True, null=True)
-    comment_status = models.CharField(max_length=255)
-    ping_status = models.CharField(max_length=255)
-    sticky = models.BooleanField(default=False)
-    format = models.CharField(max_length=255)
-    template = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(
+        max_length=field_max_length,
+    )
+    status = models.CharField(
+        max_length=field_max_length,
+    )
+    type = models.CharField(
+        max_length=field_max_length,
+    )
+    link = models.URLField(max_length=field_max_length)
+    content = models.TextField(
+        blank=True,
+        null=True,
+    )
+    excerpt = models.TextField(
+        blank=True,
+        null=True,
+    )
+    comment_status = models.CharField(
+        max_length=field_max_length,
+    )
+    ping_status = models.CharField(
+        max_length=field_max_length,
+    )
+    sticky = models.BooleanField(
+        default=False,
+    )
+    format = models.CharField(
+        max_length=field_max_length,
+    )
+    template = models.CharField(
+        max_length=field_max_length,
+        null=True,
+        blank=True,
+    )
     author = models.ForeignKey(
         "importer.WPAuthor",
         on_delete=models.SET_NULL,

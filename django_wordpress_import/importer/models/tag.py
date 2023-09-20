@@ -1,6 +1,6 @@
 from django.db import models
 
-from .abstract import WordpressModel
+from .abstract import WordpressModel, field_max_length
 
 
 class WPTag(WordpressModel):
@@ -10,12 +10,26 @@ class WPTag(WordpressModel):
     UNIQUE_FIELDS = ["name"]
     # TODO side effect of this is that it will not update the tag if it already exists
 
-    name = models.CharField(max_length=255)
-    count = models.IntegerField(default=0)
-    link = models.URLField()
-    slug = models.SlugField()
-    description = models.TextField(blank=True, null=True)
-    taxonomy = models.CharField(max_length=255)
+    name = models.CharField(
+        max_length=field_max_length,
+    )
+    count = models.IntegerField(
+        default=0,
+    )
+    link = models.URLField(
+        max_length=field_max_length,
+    )
+    slug = models.SlugField(
+        max_length=field_max_length,
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+        max_length=field_max_length,
+    )
+    taxonomy = models.CharField(
+        max_length=field_max_length,
+    )
 
     class Meta:
         verbose_name = "Tag"

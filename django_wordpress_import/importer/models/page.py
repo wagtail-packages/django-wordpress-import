@@ -1,6 +1,6 @@
 from django.db import models
 
-from .abstract import WordpressModel
+from .abstract import WordpressModel, field_max_length
 
 
 class WPPage(WordpressModel):
@@ -8,22 +8,44 @@ class WPPage(WordpressModel):
 
     SOURCE_URL = "/wp-json/wp/v2/pages"
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(
+        max_length=field_max_length,
+    )
     date = models.DateTimeField()
     date_gmt = models.DateTimeField()
     guid = models.URLField()
     modified = models.DateTimeField()
     modified_gmt = models.DateTimeField()
     slug = models.SlugField()
-    status = models.CharField(max_length=255)
-    type = models.CharField(max_length=255)
+    status = models.CharField(
+        max_length=field_max_length,
+    )
+    type = models.CharField(
+        max_length=field_max_length,
+    )
     link = models.URLField()
-    content = models.TextField(blank=True, null=True)
-    excerpt = models.TextField(blank=True, null=True)
-    comment_status = models.CharField(max_length=255)
-    ping_status = models.CharField(max_length=255)
-    sticky = models.BooleanField(default=False)
-    template = models.CharField(max_length=255, null=True, blank=True)
+    content = models.TextField(
+        blank=True,
+        null=True,
+    )
+    excerpt = models.TextField(
+        blank=True,
+        null=True,
+    )
+    comment_status = models.CharField(
+        max_length=field_max_length,
+    )
+    ping_status = models.CharField(
+        max_length=field_max_length,
+    )
+    sticky = models.BooleanField(
+        default=False,
+    )
+    template = models.CharField(
+        max_length=field_max_length,
+        null=True,
+        blank=True,
+    )
     author = models.ForeignKey(
         "importer.WPAuthor",
         on_delete=models.SET_NULL,

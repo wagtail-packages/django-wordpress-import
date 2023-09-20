@@ -1,6 +1,6 @@
 from django.db import models
 
-from .abstract import WordpressModel
+from .abstract import WordpressModel, field_max_length
 
 
 class WPComment(WordpressModel):
@@ -8,15 +8,34 @@ class WPComment(WordpressModel):
 
     SOURCE_URL = "/wp-json/wp/v2/comments"
 
-    author_name = models.CharField(max_length=255)
-    author_url = models.URLField()
+    author_name = models.CharField(
+        max_length=field_max_length,
+    )
+    author_url = models.URLField(
+        max_length=field_max_length,
+    )
     date = models.DateTimeField()
     date_gmt = models.DateTimeField()
-    content = models.TextField(blank=True, null=True)
-    link = models.URLField()
-    status = models.CharField(max_length=255, null=True, blank=True)
-    type = models.CharField(max_length=255)
-    author_avatar_urls = models.URLField(blank=True, null=True)
+    content = models.TextField(
+        blank=True,
+        null=True,
+    )
+    link = models.URLField(
+        max_length=field_max_length,
+    )
+    status = models.CharField(
+        max_length=field_max_length,
+        null=True,
+        blank=True,
+    )
+    type = models.CharField(
+        max_length=field_max_length,
+    )
+    author_avatar_urls = models.URLField(
+        blank=True,
+        null=True,
+        max_length=field_max_length,
+    )
     post = models.ForeignKey(
         "importer.WPPost",
         on_delete=models.CASCADE,

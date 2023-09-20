@@ -1,6 +1,6 @@
 from django.db import models
 
-from .abstract import WordpressModel
+from .abstract import WordpressModel, field_max_length
 
 
 class WPAuthor(WordpressModel):
@@ -8,12 +8,25 @@ class WPAuthor(WordpressModel):
 
     SOURCE_URL = "/wp-json/wp/v2/users"
 
-    name = models.CharField(max_length=255)
-    url = models.URLField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    link = models.URLField()
-    slug = models.SlugField()
-    avatar_urls = models.URLField(blank=True, null=True)  # comes from avatar_urls.96
+    name = models.CharField(
+        max_length=field_max_length,
+    )
+    url = models.URLField(
+        blank=True,
+        null=True,
+        max_length=field_max_length,
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+    )
+    link = models.URLField(
+        max_length=field_max_length,
+    )
+    slug = models.SlugField(
+        max_length=field_max_length,
+    )
+    avatar_urls = models.URLField(blank=True, null=True, max_length=field_max_length)  # comes from avatar_urls.96
 
     class Meta:
         verbose_name = "Author"

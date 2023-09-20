@@ -1,4 +1,10 @@
 from django.db import models
+from django.core.validators import URLValidator
+
+# for convenience to set max_length on fields
+# It can be uncertain what the max length of a field should need to be
+# so this is a default and trying to avoid using text fields everywhere
+field_max_length = 500
 
 
 class WordpressModel(models.Model):
@@ -17,12 +23,30 @@ class WordpressModel(models.Model):
         if not self.SOURCE_URL:
             raise NotImplementedError("WordpressModel must have a SOURCE_URL attribute")
 
-    wp_id = models.IntegerField(unique=True, verbose_name="Wordpress ID")
-    wp_foreign_keys = models.JSONField(blank=True, null=True)
-    wp_many_to_many_keys = models.JSONField(blank=True, null=True)
-    wagtail_model = models.JSONField(blank=True, null=True)
-    wp_cleaned_content = models.TextField(blank=True, null=True)
-    wp_block_content = models.JSONField(blank=True, null=True)
+    wp_id = models.IntegerField(
+        unique=True,
+        verbose_name="Wordpress ID",
+    )
+    wp_foreign_keys = models.JSONField(
+        blank=True,
+        null=True,
+    )
+    wp_many_to_many_keys = models.JSONField(
+        blank=True,
+        null=True,
+    )
+    wagtail_model = models.JSONField(
+        blank=True,
+        null=True,
+    )
+    wp_cleaned_content = models.TextField(
+        blank=True,
+        null=True,
+    )
+    wp_block_content = models.JSONField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         abstract = True
